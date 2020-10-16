@@ -4,7 +4,7 @@
   <div class="sidebar-fixed position-fixed fixed-top">
 
     <a class="logo-wrapper waves-effect">
-      <img src="https://mdbootstrap.com/img/Marketing/general/logo/small/mdb-angular.png" class="img-fluid" alt="">
+      <img src="../../../../assets/image/zalo.jpg" class="img-fluid" alt="">
     </a>
 
     <div class="list-group list-group-flush" *ngIf="user">
@@ -12,15 +12,8 @@
       <a routerLink="{{routing.DASHBOARD}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <mdb-icon fas icon="chart-pie" class="mr-2"></mdb-icon>Thống kê
       </a>
-      <a routerLink="{{routing.SELLING}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
-        <mdb-icon fas icon="store" class="mr-2"></mdb-icon>Bán hàng</a>
-      <a routerLink="{{routing.CD_MANAGER}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
-        <mdb-icon fas icon="list" class="mr-2"></mdb-icon>Quản lý đĩa</a>
-      <a routerLink="{{routing.CUSTOMER_MANAGER}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
-        <mdb-icon fas icon="users" class="mr-2"></mdb-icon>Quản lý khách hàng</a>
       <a routerLink="{{routing.USER_MANAGER}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
-        <mdb-icon fas icon="user-friends" class="mr-2"></mdb-icon>Nhân viên</a>
-
+        <mdb-icon fas icon="users" class="mr-2"></mdb-icon>Quản lý người dùng</a>
     </div>
 
   </div>
@@ -31,8 +24,8 @@
 
     <!-- Navbar brand -->
     <logo class="ml-3">
-      <a class="navbar-brand" href="https://mdbootstrap.com/angular/angular-bootstrap-getting-started/">
-        <strong class="blue-text">VCL</strong>
+      <a class="navbar-brand" routerLink="/">
+        <strong class="blue-text">ZALO</strong>
       </a>
     </logo>
 
@@ -42,7 +35,7 @@
       <!-- Links -->
       <ul class="navbar-nav mr-auto ">
         <li class="nav-item" >
-          <a class="nav-link" routerLink="/dashboard" mdbWavesEffect>Phần mềm cho thuê băng đĩa
+          <a class="nav-link" routerLink="/dashboard" mdbWavesEffect>Hệ thống quản lý người dùng
             <span class="sr-only">(current)</span>
           </a>
         </li>
@@ -53,7 +46,7 @@
       <ul class="navbar-nav nav-flex-icons">
 
         <li class="nav-item">
-          <a routerLink="/{{routing.AUTH}}/{{routing.LOGIN}}" class="nav-link" mdbWavesEffect>
+          <a routerLink="/{{routing.AUTH}}/{{routing.LOGIN}}" (click)="logout()" class="nav-link" mdbWavesEffect>
             <mdb-icon fas icon="sign-out-alt"></mdb-icon> Đăng xuất
           </a>
         </li>

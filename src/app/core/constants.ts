@@ -22,11 +22,16 @@ export const ApiUrl = {
     CREATE_CUSTOMER: '/employee/customer/createCustomer',
     GET_LIST_CUSTOMER: '/employee/customer/getListCustomer'
   },
+  AUTH: {
+    LOGIN: 'auth/loginEmail',
+    REGISTER: 'auth/signUpEmail',
+    VERIFY: 'auth/changeStatus',
+  }
 
 
 
 }
 export const LocalStorage = {
   CART: 'cart',
-  USER_INFO: 'user-info',
+  USER: 'user',
 }

@@ -1,1 +1,96 @@
-<p>register works!</p>
+<!-- Material form login -->
+<mdb-card class="z-depth-2 card">
+
+  <div class=" text-center py-4">
+    <h4>
+      <strong *ngIf="!verifyCode">Đăng ký</strong>
+      <strong *ngIf="verifyCode">Xác thực email</strong>
+
+    </h4>
+  </div>
+
+
+  <!--Card content-->
+  <mdb-card-body class="px-lg-5 pt-0">
+    <!-- Form -->
+    <form *ngIf="!verifyCode" class="text-center" style="color: #757575;" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+      <!-- Email -->
+      <div class="md-form">
+        <input mdbValidate type="email" id="email" class="form-control" mdbInput formControlName="email">
+        <label for="email">E-mail</label>
+        <mdb-error *ngIf="email.invalid &&  (email.touched || email.dirty)">Chưa nhập email
+        </mdb-error>
+      </div>
+      <!-- Password -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mt-0 mb-0">
+            <input mdbValidate [validateSuccess]="false" type="text" id="firstName" class="form-control" mdbInput
+                   formControlName="firstname">
+            <label for="firstName">Tên</label>
+            <mdb-error *ngIf="firstname.hasError('required') && firstname.touched">Chưa nhập tên</mdb-error>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mt-0 mb-0">
+            <input mdbValidate [validateSuccess]="false" type="text" id="lastName" class="form-control" mdbInput
+                   formControlName="lastname">
+            <label for="lastName">Họ và tên đệm</label>
+            <mdb-error *ngIf="lastname.hasError('required') && lastname.touched">Chưa nhập họ và tên đệm</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="md-form">
+        <input mdbValidate [validateSuccess]="false" type="text" id="username" class="form-control" mdbInput
+               formControlName="username">
+        <label for="username">Tên tài khoản</label>
+        <mdb-error *ngIf="username.hasError('required') && username.touched">Chưa nhập tên tài khoản</mdb-error>
+      </div>
+      <div class="md-form">
+        <input mdbValidate [validateSuccess]="false" type="password" id="password" class="form-control" mdbInput
+               formControlName="password">
+        <label for="password">Mật khẩu</label>
+        <mdb-error *ngIf="password.hasError('required') && password.touched">Chưa nhập mật khẩu</mdb-error>
+        <mdb-error *ngIf="password.invalid && password.dirty && !password.hasError('required')">Mật khẩu 6 ký tự trở
+          lên
+        </mdb-error>
+      </div>
+      <div class="md-form">
+        <input mdbValidate [validateSuccess]="false" type="password" id="re-password" class="form-control" mdbInput
+               formControlName="rePassword">
+        <label for="re-password">Nhập lại mật khẩu</label>
+        <mdb-error *ngIf="rePassword.hasError('required') && rePassword.touched">Chưa nhập lại mật khẩu</mdb-error>
+        <mdb-error *ngIf="rePassword.invalid && password.dirty && !rePassword.hasError('required')">Mật khẩu 6 ký tự trở
+          lên
+        </mdb-error>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{errorMessage}}
+      </div>
+
+      <!-- Sign in button -->
+      <button *ngIf="!loading" mdbBtn color="success" block="true"
+              mdbWavesEffect type="submit" [disabled]="registerForm.status !== 'VALID'">Đăng ký
+      </button>
+      <button *ngIf="loading" mdbBtn color="success" block="true" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span class="sr-only">Loading...</span>
+      </button>
+      <hr>
+      <!-- Register -->
+
+    </form>
+    <!-- Form -->
+      <div class="md-form mt-0 mb-0" *ngIf="verifyCode">
+        <input mdbValidate [validateSuccess]="false" type="text" id="code" [(ngModel)]="code" class="form-control" mdbInput>
+        <label for="firstName">Verify code</label>
+        <div class="alert alert-primary" role="alert" *ngIf="registerSuccess">
+          Đăng ký thành công
+        </div>
+        <button mdbBtn color="success" block="true" size="sm" (click)="onVerify()">Xác thực</button>
+      </div>
+  </mdb-card-body>
+
+</mdb-card>
+<!-- Material form login -->
