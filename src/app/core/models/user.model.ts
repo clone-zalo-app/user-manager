@@ -1,9 +1,10 @@
 export interface UserModel {
-  id: number;
+  id: string;
   email: string;
   enable: boolean;
   admin: boolean;
   phone: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
 }

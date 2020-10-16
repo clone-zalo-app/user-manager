@@ -3,32 +3,54 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header text-center">
-          <h2>User List</h2>
+          <h2 class="float-left">User Manager</h2>
+          <button class="float-right"  size="sm" type="button" mdbBtn color="primary" (click)="createUser()" mdbWavesEffect>
+            <mdb-icon fas icon="plus" class="mr-2"></mdb-icon>Create user
+          </button>
         </div>
         <div class="card-body">
           <table mdbTable #tableEl="mdbTable" class="z-depth-1">
             <thead>
-            <tr>
+            <tr class="text-center">
               <th *ngFor="let head of headElements; let i = index" scope="col">{{head}}
               </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="text-center">
             <tr *ngFor="let el of elements; let i = index">
               <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"
-                  scope="row">{{el.id}}</th>
+                  scope="row">{{i + 1}}</th>
               <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
-                <img class="img-thumbnail" style="width: 100px" src="https://www.elleman.vn/wp-content/uploads/2018/12/26/phim-hanh-dong-elle-man-1-475x699.jpg">
+                {{el.email}}
               </td>
-              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.fullName}}</td>
-              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.phone}}</td>
-              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.email}}</td>
-              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex"><a><mdb-icon fas icon="pen"></mdb-icon></a></td>
+              <td
+                *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.firstName}}</td>
+              <td
+                *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.lastName}}</td>
+              <td
+                *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.phone}}</td>
+              <td
+                *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.userName}}</td>
+
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                <span *ngIf="!el.admin">Member</span>
+                <span *ngIf="el.admin">Admin</span>
+              </td>
+              <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">
+                <button *ngIf="el.enable" size="sm" type="button" mdbBtn color="success" mdbWavesEffect
+                        (click)="editRow(el)">
+                  <mdb-icon fas icon="check"></mdb-icon>
+                </button>
+                <button *ngIf="!el.enable" type="button" size="sm" mdbBtn color="warning" mdbWavesEffect
+                        (click)="editRow(el)">
+                  <mdb-icon fas icon="exclamation-triangle"></mdb-icon>
+                </button>
+              </td>
             </tr>
             </tbody>
             <tfoot class="grey lighten-5 w-100">
             <tr>
-              <td colspan="7">
+              <td colspan="8">
                 <mdb-table-pagination [tableEl]="tableEl" [searchDataSource]="elements"></mdb-table-pagination>
               </td>
             </tr>

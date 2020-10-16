@@ -7,12 +7,12 @@
       <img src="../../../../assets/image/zalo.jpg" class="img-fluid" alt="">
     </a>
 
-    <div class="list-group list-group-flush" *ngIf="user">
+    <div class="list-group list-group-flush" *ngIf="currentUser">
 
-      <a routerLink="{{routing.DASHBOARD}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
+      <a *ngIf="currentUser.admin" routerLink="{{routing.DASHBOARD}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <mdb-icon fas icon="chart-pie" class="mr-2"></mdb-icon>Thống kê
       </a>
-      <a routerLink="{{routing.USER_MANAGER}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
+      <a *ngIf="currentUser.admin" routerLink="{{routing.USER_MANAGER}}" routerLinkActive="active" class="list-group-item list-group-item-action waves-effect">
         <mdb-icon fas icon="users" class="mr-2"></mdb-icon>Quản lý người dùng</a>
     </div>
 

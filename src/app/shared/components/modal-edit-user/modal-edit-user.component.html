@@ -1,0 +1,75 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">×</span>
+    </button>
+    <h4 class="modal-title w-100" id="myModalLabel" *ngIf="editUser">Edit user</h4>
+    <h4 class="modal-title w-100" id="myModal" *ngIf="!editUser">Create user</h4>
+  </div>
+  <div class="modal-body">
+    <form class="text-center" style="color: #757575;" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+      <!-- Email -->
+      <div class="md-form">
+        <input mdbValidate type="email" id="email" class="form-control" mdbInput formControlName="email">
+        <label for="email">E-mail</label>
+        <mdb-error *ngIf="email.invalid &&  (email.touched || email.dirty)">Chưa nhập email
+        </mdb-error>
+      </div>
+      <!-- Password -->
+      <div class="row">
+        <div class="col-md-6">
+          <div class="md-form mt-0 mb-0">
+            <input mdbValidate  type="text" id="firstName" class="form-control" mdbInput
+                   formControlName="firstname">
+            <label for="firstName">Tên</label>
+            <mdb-error *ngIf="firstname.hasError('required') && firstname.touched">Chưa nhập tên</mdb-error>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="md-form mt-0 mb-0">
+            <input mdbValidate  type="text" id="lastName" class="form-control" mdbInput
+                   formControlName="lastname">
+            <label for="lastName">Họ và tên đệm</label>
+            <mdb-error *ngIf="lastname.hasError('required') && lastname.touched">Chưa nhập họ và tên đệm</mdb-error>
+          </div>
+        </div>
+      </div>
+      <div class="md-form">
+        <input mdbValidate  type="text" id="username" class="form-control" mdbInput
+               formControlName="username">
+        <label for="username">Tên tài khoản</label>
+        <mdb-error *ngIf="username.hasError('required') && username.touched">Chưa nhập tên tài khoản</mdb-error>
+      </div>
+      <select class="browser-default custom-select">
+        <option selected>Member</option>
+        <option value="1">Admin</option>
+      </select>
+      <div class="md-form">
+        <input mdbValidate type="password" id="password" class="form-control" mdbInput
+               formControlName="password">
+        <label for="password">Mật khẩu</label>
+        <mdb-error *ngIf="password.hasError('required') && password.touched">Chưa nhập mật khẩu</mdb-error>
+        <mdb-error *ngIf="password.invalid && password.dirty && !password.hasError('required')">Mật khẩu 6 ký tự trở
+          lên
+        </mdb-error>
+      </div>
+      <div class="alert alert-danger" role="alert" *ngIf="error">
+        {{errorMessage}}
+      </div>
+
+      <!-- Sign in button -->
+
+      <!-- Register -->
+
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="float-right" *ngIf="!editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect>
+      <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add user
+    </button>
+    <button class="float-right" *ngIf="editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect>
+      <mdb-icon fas icon="save" class="mr-1"></mdb-icon>Save
+    </button>
+  </div>
+</div>

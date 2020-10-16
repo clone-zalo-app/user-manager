@@ -12,7 +12,7 @@ export const frontendUrl = {
 export const ApiUrl = {
 
   ADMIN: {
-    GET_LIST_PRODUCT: '/admin/product/createProduct'
+    GET_LIST_USER: 'user/'
   },
   EMPLOYEE: {
     GET_LIST_CATEGORY: '/employee/category/getListCategory',

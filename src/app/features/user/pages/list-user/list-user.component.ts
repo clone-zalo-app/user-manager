@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MdbTableDirective, MdbTablePaginationComponent} from "angular-bootstrap-md";
+import {MDBModalRef, MDBModalService, MdbTableDirective, MdbTablePaginationComponent} from "angular-bootstrap-md";
 import {UserModel} from "../../../../core/models/user.model";
+import {UserService} from "../../../../core/services/user.service";
+import {ModalEditUserComponent} from "../../../../shared/components/modal-edit-user/modal-edit-user.component";
 
 @Component({
   selector: 'app-list-user',
@@ -10,11 +12,38 @@ import {UserModel} from "../../../../core/models/user.model";
 export class ListUserComponent implements OnInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('tableEl') mdbTable: MdbTableDirective;
-  headElements: Array<string> = ['STT', 'Image' ,'Name', 'Price', 'Quantity', 'Edit'];
+  modalRef: MDBModalRef;
+
+  headElements: Array<string> = ['STT', 'Email' ,'First name', 'Last name', 'Phone', 'Username', 'Role' ,'Active'];
   elements: UserModel[] = [];
-  constructor() { }
+  constructor(private userService: UserService, private modalService: MDBModalService,) { }
 
   ngOnInit(): void {
+    this.userService.getListUser().subscribe(value => {
+      this.mdbTable.setDataSource(value.data);
+      this.elements = this.mdbTable.getDataSource();
+    })
+  }
+
+  editRow(el: UserModel) {
+    const elementIndex = this.elements.findIndex((elem: UserModel) => el.id === elem.id);
+    const modalOptions = {
+      data: {
+        editUser: el
+      },
+    };
+    this.modalRef = this.modalService.show(ModalEditUserComponent, modalOptions);
+    this.modalRef.content.saveButtonClicked.subscribe((userElement: UserModel) => {
+      this.elements[elementIndex] = userElement;
+    });
+    this.mdbTable.setDataSource(this.elements);
+  }
+  createUser() {
+    this.modalRef = this.modalService.show(ModalEditUserComponent);
+    this.modalRef.content.saveButtonClicked.subscribe((userElement: UserModel) => {
+      this.elements.push(userElement)
+    });
+    this.mdbTable.setDataSource(this.elements);
   }
 
 }
