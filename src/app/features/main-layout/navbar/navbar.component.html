@@ -45,7 +45,7 @@
       <!-- Search form -->
       <ul class="navbar-nav nav-flex-icons">
 
-        <li class="nav-item">
+        <li class="nav-item" *ngIf="currentUser">
           <a routerLink="/{{routing.AUTH}}/{{routing.LOGIN}}" (click)="logout()" class="nav-link" mdbWavesEffect>
             <mdb-icon fas icon="sign-out-alt"></mdb-icon> Đăng xuất
           </a>

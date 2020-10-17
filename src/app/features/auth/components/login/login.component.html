@@ -34,10 +34,10 @@
         Đăng nhập thành công
       </div>
       <!-- Sign in button -->
-      <button *ngIf="!loading" mdbBtn color="success" block="true"
+      <button *ngIf="!loading" mdbBtn class="custom-button" block="true"
               mdbWavesEffect type="submit" [disabled]="loginForm.status !== 'VALID'">Đăng nhập</button>
       <!--            [disabled]="loginForm.status !== 'VALID'"-->
-      <button *ngIf="loading" mdbBtn color="success" block="true" disabled>
+      <button *ngIf="loading" mdbBtn class="custom-button" block="true" disabled>
         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
         <span class="sr-only">Loading...</span>
       </button>

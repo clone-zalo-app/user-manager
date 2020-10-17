@@ -45,17 +45,19 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.authService.loginByEmail(loginReq).subscribe(res => {
       this.error = false;
-      this.loading = false;
       this.loginSuccess = false;
       if (res.status == 'fail') {
+        this.loading = false;
+
         this.error = true
         this.errorLabel = res.message
       } else {
         this.loginSuccess = true;
         this.authService.saveLocalStorage(CONST.LocalStorage.USER, res.data);
         setTimeout(() => {
+          this.loading = false;
           this.router.navigate(['dashboard'])
-        },300)
+        },2000)
       }
     })
 

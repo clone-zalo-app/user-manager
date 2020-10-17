@@ -7,7 +7,7 @@
     <h4 class="modal-title w-100" id="myModal" *ngIf="!editUser">Create user</h4>
   </div>
   <div class="modal-body">
-    <form class="text-center" style="color: #757575;" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <form class="text-center" style="color: #757575;" [formGroup]="registerForm">
 
       <!-- Email -->
       <div class="md-form">
@@ -41,10 +41,23 @@
         <label for="username">Tên tài khoản</label>
         <mdb-error *ngIf="username.hasError('required') && username.touched">Chưa nhập tên tài khoản</mdb-error>
       </div>
-      <select class="browser-default custom-select">
-        <option selected>Member</option>
-        <option value="1">Admin</option>
-      </select>
+      <div class="md-form">
+        <input mdbValidate  type="text" id="phone" class="form-control" mdbInput
+               formControlName="phone">
+        <label for="phone">Số điện thoại</label>
+        <mdb-error *ngIf="phone.hasError('required') && phone.touched">Chưa nhập số điện thoại</mdb-error>
+      </div>
+      <div class="row">
+        <div class="col-md-8">
+          <select class="browser-default custom-select" formControlName="role" >
+            <option  *ngFor="let role of roles"  selected value="{{role.value}}">{{role.name}}</option>
+          </select>
+        </div>
+        <div class="col-md-4 pt-1">
+          <mdb-checkbox *ngIf="editUser" [checked]="editUser.enable" [default]="true">Active</mdb-checkbox>
+          <mdb-checkbox *ngIf="!editUser" [checked]="true" [default]="true">Active</mdb-checkbox>
+        </div>
+      </div>
       <div class="md-form">
         <input mdbValidate type="password" id="password" class="form-control" mdbInput
                formControlName="password">
@@ -65,8 +78,14 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="float-right" *ngIf="!editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect>
+    <button class="float-right" *ngIf="!editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect (click)="onCreateUser()">
       <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add user
+    </button>
+    <button class="float-left" (click)="modalRef.hide()" size="sm" type="button" mdbBtn color="warning" mdbWavesEffect>
+      <mdb-icon class="mr-1" fas icon="times"></mdb-icon>Cancel
+    </button>
+    <button class="float-left" *ngIf="editUser" size="sm" type="button" mdbBtn color="danger" mdbWavesEffect (click)="onDeleteUser()">
+      <mdb-icon class="mr-1" far icon="trash-alt"></mdb-icon>Delete
     </button>
     <button class="float-right" *ngIf="editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect>
       <mdb-icon fas icon="save" class="mr-1"></mdb-icon>Save

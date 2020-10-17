@@ -21,6 +21,9 @@ export class CommonService {
   pos(url: string, request: any): Observable<any> {
     return  this.http.post(this.baseUrl+url, request);
   }
+  delete(url: string): Observable<any> {
+    return  this.http.delete(this.baseUrl+url)
+  }
   patch(url: string, request: any): Observable<any> {
     return this.http.patch(this.baseUrl+url, request);
   }

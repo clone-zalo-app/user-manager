@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {UserModel} from "../../../core/models/user.model";
 import {Subject} from "rxjs";
 import {MDBModalRef} from "angular-bootstrap-md";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {RegisterModel} from "../../../core/models/register.model";
-import {AuthService} from "../../../core/services/auth.service";
+import {UserService} from "../../../core/services/user.service";
 
 @Component({
   selector: 'app-modal-edit-user',
@@ -23,7 +22,41 @@ export class ModalEditUserComponent implements OnInit {
   verifyCode = false;
   errorMessage: string;
   code: string;
-  constructor(public modalRef: MDBModalRef,private fb: FormBuilder, private authService: AuthService) { }
+  roles: any[] = [
+    {value: true, name: 'ADMIN'},
+    {value: false, name: 'MEMBER'}
+  ]
+
+  constructor(public modalRef: MDBModalRef, private fb: FormBuilder, private userService: UserService) {
+  }
+
+  get username() {
+    return this.registerForm.get('username');
+  }
+
+  get password() {
+    return this.registerForm.get('password');
+  }
+
+  get email() {
+    return this.registerForm.get('email');
+  }
+
+  get firstname() {
+    return this.registerForm.get('firstname');
+  }
+
+  get lastname() {
+    return this.registerForm.get('lastname');
+  }
+
+  get phone() {
+    return this.registerForm.get('phone');
+  }
+
+  get role() {
+    return this.registerForm.get('role');
+  }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -32,36 +65,44 @@ export class ModalEditUserComponent implements OnInit {
       lastname: ['', Validators.required],
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]],
+      role: ['', Validators.required],
+      phone: ['', Validators.required]
     });
-  }
-  get username() {return this.registerForm.get('username'); }
-  get password() {return this.registerForm.get('password'); }
-  get email() {return this.registerForm.get('email'); }
-  get firstname() {return this.registerForm.get('firstname'); }
-  get lastname() {return this.registerForm.get('lastname'); }
-
-  onRegister() {
-    const registerInfo: RegisterModel = {
-      email: this.email.value,
-      firstname: this.firstname.value,
-      lastname: this.lastname.value,
-      username: this.username.value,
-      password: this.password.value
+    this.registerForm.patchValue({role: false})
+    if (this.editUser) {
+      this.registerForm.patchValue({
+        email: this.editUser.email,
+        firstname: this.editUser.firstName,
+        lastname: this.editUser.lastName,
+        username: this.editUser.userName,
+        role: this.editUser.admin,
+        phone: this.editUser.phone
+      })
     }
+  }
+
+  onCreateUser() {
+    const registerInfo: UserModel = {
+      phone: this.phone.value,
+      email: this.email.value,
+      admin: this.role.value,
+      userName: this.username.value,
+      lastName: this.lastname.value,
+      firstName: this.firstname.value,
+      enable: true
+    }
+    this.userService.createUser(registerInfo).subscribe(res => {
+      console.log(res);
+      this.saveButtonClicked.next(registerInfo);
+    }, error => console.log(error))
     this.loading = true;
     this.error = false;
-    this.authService.registerByEmail(registerInfo).subscribe(res => {
-      this.loading = false;
-      if (res.data.enable == false) {
-        this.verifyCode = true;
-      } else {
-        this.errorMessage = 'Email đã được đăng ký'
-      }
-    }, error => {
-      this.loading = false;
-      this.error = true;
-      this.errorMessage = error.error.message;
-    })
 
+  }
+
+  onDeleteUser() {
+    this.userService.deleteUser(this.editUser._id).subscribe(res => {
+      console.log(res);
+    })
   }
 }

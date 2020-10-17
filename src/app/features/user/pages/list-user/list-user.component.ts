@@ -26,7 +26,7 @@ export class ListUserComponent implements OnInit {
   }
 
   editRow(el: UserModel) {
-    const elementIndex = this.elements.findIndex((elem: UserModel) => el.id === elem.id);
+    const elementIndex = this.elements.findIndex((elem: UserModel) => el._id === elem._id);
     const modalOptions = {
       data: {
         editUser: el
