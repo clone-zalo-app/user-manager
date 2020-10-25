@@ -12,9 +12,12 @@ export class UserService extends CommonService{
       return this.get(CONST.ApiUrl.ADMIN.USER);
     }
     deleteUser(id: string) {
-      return this.delete(CONST.ApiUrl.ADMIN.USER+`:${id}`)
+      return this.delete(CONST.ApiUrl.ADMIN.USER+`${id}`)
     }
     createUser(userModal: UserModel) {
       return this.pos(CONST.ApiUrl.ADMIN.USER, userModal);
+    }
+    updateUser(userModal: UserModel) {
+      return this.put(CONST.ApiUrl.ADMIN.USER+`${userModal._id}`, userModal);
     }
 }

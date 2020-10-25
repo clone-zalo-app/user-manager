@@ -34,7 +34,11 @@ export class ListUserComponent implements OnInit {
     };
     this.modalRef = this.modalService.show(ModalEditUserComponent, modalOptions);
     this.modalRef.content.saveButtonClicked.subscribe((userElement: UserModel) => {
-      this.elements[elementIndex] = userElement;
+      if (userElement) {
+        this.elements[elementIndex] = userElement;
+      } else {
+        this.elements.splice(elementIndex,1);
+      }
     });
     this.mdbTable.setDataSource(this.elements);
   }

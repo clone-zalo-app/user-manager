@@ -78,16 +78,21 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="float-right" *ngIf="!editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect (click)="onCreateUser()">
+    <button class="float-right" *ngIf="!editUser " size="sm" type="button" mdbBtn color="primary" mdbWavesEffect (click)="onCreateUser()">
       <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add user
     </button>
     <button class="float-left" (click)="modalRef.hide()" size="sm" type="button" mdbBtn color="warning" mdbWavesEffect>
       <mdb-icon class="mr-1" fas icon="times"></mdb-icon>Cancel
     </button>
-    <button class="float-left" *ngIf="editUser" size="sm" type="button" mdbBtn color="danger" mdbWavesEffect (click)="onDeleteUser()">
+    <button class="float-left" *ngIf="editUser && !loadDelete" size="sm" type="button" mdbBtn color="danger" mdbWavesEffect (click)="onDeleteUser()">
       <mdb-icon class="mr-1" far icon="trash-alt"></mdb-icon>Delete
     </button>
-    <button class="float-right" *ngIf="editUser" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect>
+
+    <button *ngIf="loadSave || loadDelete || loadCreate || loadCreate" [ngClass]="{'btn-primary':loadSave,'btn-danger':loadDelete,'btn-primary':loadCreate}" class="btn btn-sm" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+      <span class="sr-only">Loading...</span>
+    </button>
+    <button class="float-right" *ngIf="editUser && !loadSave" size="sm" type="button" mdbBtn color="primary" mdbWavesEffect (click)="onUpdateUser()">
       <mdb-icon fas icon="save" class="mr-1"></mdb-icon>Save
     </button>
   </div>

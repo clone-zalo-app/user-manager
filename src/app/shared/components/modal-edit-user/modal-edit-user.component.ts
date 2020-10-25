@@ -18,10 +18,12 @@ export class ModalEditUserComponent implements OnInit {
   registerForm: FormGroup;
   loading = false;
   error = false;
-  registerSuccess = false;
   verifyCode = false;
   errorMessage: string;
   code: string;
+  loadSave = false;
+  loadDelete = false;
+  loadCreate = false;
   roles: any[] = [
     {value: true, name: 'ADMIN'},
     {value: false, name: 'MEMBER'}
@@ -82,6 +84,8 @@ export class ModalEditUserComponent implements OnInit {
   }
 
   onCreateUser() {
+
+    this.loadCreate = true;
     const registerInfo: UserModel = {
       phone: this.phone.value,
       email: this.email.value,
@@ -89,20 +93,51 @@ export class ModalEditUserComponent implements OnInit {
       userName: this.username.value,
       lastName: this.lastname.value,
       firstName: this.firstname.value,
-      enable: true
+      enable: true,
+      password: this.password.value
     }
+    console.log(registerInfo);
     this.userService.createUser(registerInfo).subscribe(res => {
       console.log(res);
+      this.loadCreate = false;
       this.saveButtonClicked.next(registerInfo);
     }, error => console.log(error))
-    this.loading = true;
+    this.loadCreate = false;
     this.error = false;
 
   }
 
   onDeleteUser() {
+    this.loadDelete = true;
     this.userService.deleteUser(this.editUser._id).subscribe(res => {
-      console.log(res);
+        this.loadDelete = false;
+        this.modalRef.hide();
+        this.saveButtonClicked.next(null);
+    }, error => {
+      this.loadDelete = false;
+      this.errorMessage = error.error.message;
+    })
+  }
+  onUpdateUser() {
+    this.loadSave = true;
+    const userInfo: UserModel = {
+      phone: this.phone.value,
+      email: this.email.value,
+      admin: this.role.value,
+      userName: this.username.value,
+      lastName: this.lastname.value,
+      firstName: this.firstname.value,
+      enable: true,
+      password: this.password.value
+    }
+    userInfo._id = this.editUser._id;
+    this.userService.updateUser(userInfo).subscribe(res => {
+      this.saveButtonClicked.next(userInfo);
+      this.modalRef.hide();
+      this.loadSave = false;
+    }, error => {
+      this.loadSave = false;
+      this.errorMessage = error.error.message;
     })
   }
 }
