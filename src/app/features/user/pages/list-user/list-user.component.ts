@@ -39,15 +39,15 @@ export class ListUserComponent implements OnInit {
       } else {
         this.elements.splice(elementIndex,1);
       }
+      this.mdbTable.setDataSource(this.elements);
     });
-    this.mdbTable.setDataSource(this.elements);
   }
   createUser() {
     this.modalRef = this.modalService.show(ModalEditUserComponent);
     this.modalRef.content.saveButtonClicked.subscribe((userElement: UserModel) => {
-      this.elements.push(userElement)
+      this.elements.push(userElement);
+      this.mdbTable.setDataSource(this.elements);
     });
-    this.mdbTable.setDataSource(this.elements);
   }
 
 }

@@ -11,7 +11,7 @@
 
       <!-- Email -->
       <div class="md-form">
-        <input mdbValidate type="email" id="email" class="form-control" mdbInput formControlName="email">
+        <input mdbValidate type="email" id="email" [ngClass]="editUser? 'disabled' : ''" class="form-control" mdbInput formControlName="email">
         <label for="email">E-mail</label>
         <mdb-error *ngIf="email.invalid &&  (email.touched || email.dirty)">Chưa nhập email
         </mdb-error>
@@ -42,25 +42,26 @@
         <mdb-error *ngIf="username.hasError('required') && username.touched">Chưa nhập tên tài khoản</mdb-error>
       </div>
       <div class="md-form">
-        <input mdbValidate  type="text" id="phone" class="form-control" mdbInput
+        <input mdbValidate [ngClass]="editUser? 'disabled' : ''" type="text" id="phone" class="form-control" mdbInput
                formControlName="phone">
         <label for="phone">Số điện thoại</label>
         <mdb-error *ngIf="phone.hasError('required') && phone.touched">Chưa nhập số điện thoại</mdb-error>
       </div>
       <div class="row">
         <div class="col-md-8">
-          <select class="browser-default custom-select" formControlName="role" >
+          <select [ngClass]="editUser? 'disabled' : ''" class="browser-default custom-select" formControlName="role" >
             <option  *ngFor="let role of roles"  selected value="{{role.value}}">{{role.name}}</option>
           </select>
         </div>
         <div class="col-md-4 pt-1">
-          <mdb-checkbox *ngIf="editUser" [checked]="editUser.enable" [default]="true">Active</mdb-checkbox>
+          <mdb-checkbox *ngIf="editUser" [checked]="editUser.enable" >Active</mdb-checkbox>
           <mdb-checkbox *ngIf="!editUser" [checked]="true" [default]="true">Active</mdb-checkbox>
         </div>
       </div>
       <div class="md-form">
         <input mdbValidate type="password" id="password" class="form-control" mdbInput
-               formControlName="password">
+               formControlName="password"
+               [ngClass]="editUser? 'disabled' : ''">
         <label for="password">Mật khẩu</label>
         <mdb-error *ngIf="password.hasError('required') && password.touched">Chưa nhập mật khẩu</mdb-error>
         <mdb-error *ngIf="password.invalid && password.dirty && !password.hasError('required')">Mật khẩu 6 ký tự trở
@@ -78,7 +79,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button class="float-right" *ngIf="!editUser " size="sm" type="button" mdbBtn color="primary" mdbWavesEffect (click)="onCreateUser()">
+    <button class="float-right" [disabled]="registerForm.status == 'INVALID'" *ngIf="!editUser " size="sm" type="button" mdbBtn color="primary" mdbWavesEffect (click)="onCreateUser()">
       <mdb-icon fas icon="plus" class="mr-1"></mdb-icon>Add user
     </button>
     <button class="float-left" (click)="modalRef.hide()" size="sm" type="button" mdbBtn color="warning" mdbWavesEffect>

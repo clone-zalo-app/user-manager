@@ -78,7 +78,8 @@ export class ModalEditUserComponent implements OnInit {
         lastname: this.editUser.lastName,
         username: this.editUser.userName,
         role: this.editUser.admin,
-        phone: this.editUser.phone
+        phone: this.editUser.phone,
+        password: ''
       })
     }
   }
@@ -96,11 +97,10 @@ export class ModalEditUserComponent implements OnInit {
       enable: true,
       password: this.password.value
     }
-    console.log(registerInfo);
     this.userService.createUser(registerInfo).subscribe(res => {
-      console.log(res);
       this.loadCreate = false;
       this.saveButtonClicked.next(registerInfo);
+      this.modalRef.hide();
     }, error => console.log(error))
     this.loadCreate = false;
     this.error = false;
@@ -121,14 +121,14 @@ export class ModalEditUserComponent implements OnInit {
   onUpdateUser() {
     this.loadSave = true;
     const userInfo: UserModel = {
-      phone: this.phone.value,
-      email: this.email.value,
-      admin: this.role.value,
+      phone: null,
+      email: null,
+      admin: null,
       userName: this.username.value,
       lastName: this.lastname.value,
       firstName: this.firstname.value,
       enable: true,
-      password: this.password.value
+      password: null
     }
     userInfo._id = this.editUser._id;
     this.userService.updateUser(userInfo).subscribe(res => {
