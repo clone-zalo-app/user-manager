@@ -24,6 +24,7 @@ export class AuthService extends CommonService{
   }
   logout() {
     localStorage.removeItem(CONST.LocalStorage.USER);
+    localStorage.removeItem(CONST.LocalStorage.TOKEN)
     this.userSubject.next(null);
   }
 }

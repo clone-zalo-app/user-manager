@@ -34,4 +34,5 @@ export const ApiUrl = {
 export const LocalStorage = {
   CART: 'cart',
   USER: 'user',
+  TOKEN: 'token'
 }

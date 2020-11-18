@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
     }
     this.loading = true;
     this.authService.loginByEmail(loginReq).subscribe(res => {
+      console.log(res)
       this.error = false;
       this.loginSuccess = false;
       if (res.status == 'fail') {
@@ -53,11 +54,9 @@ export class LoginComponent implements OnInit {
         this.errorLabel = res.message
       } else {
         this.loginSuccess = true;
-        this.authService.saveLocalStorage(CONST.LocalStorage.USER, res.data);
-        setTimeout(() => {
+        this.authService.saveLocalStorage(CONST.LocalStorage.USER, res.data.user);
           this.loading = false;
           this.router.navigate(['dashboard'])
-        },2000)
       }
     })
 
